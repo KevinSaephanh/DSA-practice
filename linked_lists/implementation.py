@@ -10,7 +10,7 @@ class LinkedList:
         self.head = new_node
         self.tail = new_node
 
-    def insert_at_start(self, data):
+    def insert_at_head(self, data):
         new_node = Node(data)
         if self.head is None:
             self.head = new_node
@@ -19,7 +19,7 @@ class LinkedList:
             new_node.next = self.head
             self.head = new_node
 
-    def insert_at_end(self, data):
+    def insert_at_tail(self, data):
         new_node = Node(data)
         if self.head is None:
             self.head = new_node
@@ -28,22 +28,26 @@ class LinkedList:
             self.tail.next = new_node
             self.tail = new_node
 
-    def insert_node(self, index, value):
+    def insert_at_pos(self, pos, value):
+        if pos <= 0:
+            self.insert_at_head(value)
+            return
+
         new_node = Node(value)
         curr = self.head
-        prev = None
-        i = 0
-        # TODO: fix
-        while curr is not None:
-            if i == index:
-                prev.next = new_node
-                new_node.next = curr
-                if curr == self.head:
-                    self.head = new_node
-                if curr == self.tail:
-                    self.tail = new_node
+        curr_pos = 0
+        while curr and curr_pos < pos - 1:
+            curr = curr.next
+            curr_pos += 1
 
-    def remove_at_start(self):
+        if not curr:
+            return "Invalid position"
+        # Set new node's next pointer to curr's next then set curr's next to new node
+        # Ex: 1 --> 2 --> curr --> curr.next ==> 1 --> 2 --> curr --> new_node --> curr.next
+        new_node.next = curr.next
+        curr.next = new_node
+
+    def remove_at_head(self):
         if self.head is None:
             return
         if self.head == self.tail:
@@ -52,7 +56,7 @@ class LinkedList:
         else:
             self.head = self.head.next
 
-    def remove_at_end(self):
+    def remove_at_tail(self):
         curr = self.head
         while curr.next != self.tail:
             curr = curr.next
@@ -69,7 +73,7 @@ class LinkedList:
                     if curr.next is None:
                         self.tail = prev
                 else:
-                    self.remove_at_start()
+                    self.remove_at_head()
                 return True
             prev = curr
             curr = curr.next
@@ -117,13 +121,13 @@ class LinkedList:
 
 
 my_linked_list = LinkedList(1)
-my_linked_list.insert_at_start(2)
-my_linked_list.insert_at_start(3)
-my_linked_list.insert_at_end(4)
-my_linked_list.insert_at_end(5)
-my_linked_list.insert_at_start(6)
+my_linked_list.insert_at_head(2)
+my_linked_list.insert_at_head(3)
+my_linked_list.insert_at_tail(4)
+my_linked_list.insert_at_tail(5)
+my_linked_list.insert_at_head(6)
 
-my_linked_list.remove_at_start()
+my_linked_list.remove_at_head()
 my_linked_list.print_list()
 
 my_linked_list.reverse()
