@@ -72,11 +72,15 @@ class DoublyLinkedList:
         if index < 0 or index > self.length:
             return None
         temp = self.head
+        # Determine which half we should search on
+        # Starting from the beginning when index is in the latter half would be a waste of time
         if index < self.length / 2:
+            # Traverse from beginning up to index to get node
             for _ in range(index):
                 temp = temp.next
         else:
             temp = self.tail
+            # Traverse backwards from end down to index to get node
             for _ in range(self.length - 1, index, -1):
                 temp = temp.prev
         return temp

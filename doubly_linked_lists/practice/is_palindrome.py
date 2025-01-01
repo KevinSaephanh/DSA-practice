@@ -11,8 +11,10 @@ def is_palindrome(dll):
     my_str = ""
     curr = dll.head
     while curr:
+        # Append value to string
         my_str += str(curr.value)
         curr = curr.next
+    # Check if string is equal to its reversed string
     return my_str == my_str[::-1]
 
 

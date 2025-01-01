@@ -9,8 +9,10 @@ def reverse(dll):
         return None
     curr = dll.head
     while curr:
+        # Swap pointers of prev and next for curr's next and prev
         curr.next, curr.prev = curr.prev, curr.next
         curr = curr.prev
+    # Swap head and tail
     dll.head, dll.tail = dll.tail, dll.head
 
 
